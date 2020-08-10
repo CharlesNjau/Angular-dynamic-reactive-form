@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Attribute} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
@@ -76,23 +76,19 @@ export class AppComponent  {
     this.createYg();
     this.createZg();
     this.X.patchValue(this.objct)
-    console.log("Form structure")
-    console.log(this.X.get('options') as FormArray)
-
     this.objct.attributes.forEach((attribute,index)=>{
-         let options = this.attributes.at(index)
-      
+        //let options = this.attributes.at(index)
+        //console.log("options: ",options.get('options'))
          
        this.formArray.push(this.fb.group({
-        name:attribute.name,
-        options: ''
+        'name':attribute.name,
+        'options': this.fb.array([
+          this.fb.group({
+            option:'t'
+          })
+        ])
        }))
-      attribute.options.forEach((attribute)=>{
-            this.formArray2.push(this.fb.group({
-              options:attribute.option
-            }))
-      });
-
+    
       
     })
     
@@ -100,7 +96,6 @@ export class AppComponent  {
 
     console.log("form Array 2 data \n", this.formArray2.value)
     this.X.setControl('attributes',this.formArray)
-    this.X.
 
 
     //setControl('options',this.formArray2)
