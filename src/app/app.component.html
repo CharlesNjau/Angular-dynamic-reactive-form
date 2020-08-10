@@ -1,0 +1,52 @@
+<form class="form-inline" [formGroup]="X" (ngSubmit)="onSubmit(X.value)">
+  
+  <div class="form-group col-3 mb-2">
+    <label for="categoryname">Category</label>
+    <input type="text" class="form-control" formControlName="categoryname" id="categoryname">
+  </div>
+
+  <div class="form-inline" formArrayName="attributes">
+    <div *ngFor="let y of attributes?.controls; let k=index">
+      <hr/>
+      <!-- <div> test {{k}}</div> -->
+      <div [formGroupName]="k" class="row pt-1 pb-1">
+        <!-- <div class="col-12">
+          <label>attributes {{k + 1}}</label>
+        </div> -->
+        <div class="form-group col-3 mb-2">
+          <input type="text" class="form-control" formControlName="name" placeholder="name">
+        </div>
+        <div class="form-inline" formArrayName="options">
+          <div *ngFor="let fondo of getCurrentZ(k)?.controls; let j=index">
+            <hr class="bg-secondary"/>
+            <div [formGroupName]="j" class="pt-1 pb-1">
+              <!-- <label>options {{j + 1}}</label> -->
+              <div class="form-group col-3 mb-2">
+                <input type="text" class="form-control" formControlName="option" placeholder="option">
+              </div>        
+              <div class="form-group col-3 mb-2">
+                <button (click)="deleteZ(k, j)" class="btn btn-danger mr-1">Remove</button>
+              </div>
+            </div>
+          </div>
+        </div>        
+
+        <div class="form-group col-12 mb-2 pr-1">
+          <button class="btn btn-info mr-1" (click)="addZ(k)">+ options</button>
+        </div>
+        <div class="form-group col-12 mb-2 pr-1">
+          <button (click)="deleteY(k)" class="btn btn-danger mr-1">
+            Remove
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group col-12 mt-2">
+    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+    <button (click)="addY()" class="btn btn-success">+ attributes</button>
+  </div>
+  {{X.values | json}}
+</form>
+
